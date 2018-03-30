@@ -8,95 +8,72 @@ document.getElementById("Name").innerHTML = userName + " Welcome to:";
 
 
 // Start of the game
-var availableLetter
-var availableLetter = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-// var availableLetter = alphabet();
+// Characters of the movie Star Wars
+var characters = ["Jar Jar Binks", "Obi-Wan Kenobi", "Leia", "Chewbecca", "Han Solo", "Darth Vader", "Yoda", "Luke Skywalker", "Anakin Skywalker" ];
+// English Alphabet with special characters
+var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "-", " "];
+var lives = 12;
 
-console.log(Array.from("alphabet"));
-
+// Game state
 var wins = 0;
-losses = 0;
-correct = 0;
-lives = 12;
-letterGuessed = [];
-letterBlank = [];
-randomWord = "";
+var losses = 0;
+var guesses = [];
+var targetedCharacter = "";
 
-    // Characters of the movie Star Wars
-    var characters = ["Jar Jar Binks", "Obi-Wan Kenobi", "Leia", "Chewbecca", "Han Solo", "Darth Vader", "Yoda", "Luke Skywalker", "Anakin Skywalker" ];
-  console.log(Array.from("characters"));
-// function gameOver() {
-//     if (letterBlanks.indexof("_") === -1) {
-//         wins++;
-//         alert("You won!");
-        
-//     } else {
-//         losses++;
-//         alert("You lost!");
-//     }
-// }
-//     window.onload = function() {
-//     document.getElementById("wins").innerHTML = totalWins;   
-//     // document.getElementById("").innerHTML = losses;
-//     }
-//     restartTheGame();
+//JS into HTML
+    function updateOutput() {
+        var html =
+        "<p>Lives: " + lives + "</p>" +
+        "<p>Current Word: _ " + targetedCharacter + "</p>" +
+        // "<p>_ _ _ _ " + targetedCharacter + "</p>" +
+        "<p>Letters Guessed: " + guesses + "</p>" +
+        "<p>Wins: " + wins + "</p>" +
+        "<p>Losses: " + losses + "</p>";
+        document.querySelector("#myGameArea").innerHTML = html;
 
-// function checkGameOver () {
-//     return availableLetter.indexOf(letter) > -1;
-// }
+    }
+updateOutput();
+// Picking random Star Wars Character
+function pickRandomCharacters() {
+    for (var i = 0; i = characters; i++)
+    var characters = characters[Math.floor(Math.random() * characters.length)];
+    var characters = targetedCharacter;
+    console.log(characters);
+    return characters;
+}
 
-// function updateWrongGuess() {
-//     livesLeft--;
-//     document.getElementById("guessedLetter").innerHTML = letterGuessed.join(" ");
-//     document.getElementById("user-lives").innerHTML = livesLeft;
-// }
+document.onkeyup = function(event) {
+    var guess = event.key.toLowerCase();
+    if (! alphabet.includes(guess)) { return;}
+    if (guess.includes(guess)) { return;}
 
-// function inititalizeGame() {
-//     livesLeft = 12;
-//     letterGuessed = [];
-//     letterBlank = [];
-//     randomword = words [Math.floor ((Math.random()=words.length))];
+    guesses.push(guess);
+    guesses.sort();
+    if (guess === targetedCharacter) {
+        wins++;
 
-//     for (var i=0; i <= "z".charCodeAt(0); i++) {
-//         availableLetter.push(String.fromCharCode(i));
-//     }
-//     return availableLetter;
-// }
+        //Reset game
+        guesses = [];
+        targetedCharacter = pickRandomCharacter();
+    } else {
+        //innocent guess
+        if (guesses.lengeth >= lives) {
+            losses++;
+            guesses = [];
+            targetedCharacter = pickRandomCharacter();
 
-// document.onekeyup = function(event) {
-//     var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
-//     if (word.indexof (userGuess) > -1) {
-//         alert("That's a correct letter!!");
-//         document.getElementById("currentWord").innerHTML += userGuess;
-//         document.getElementById("letterGuessed") += userGuess;
-//         correct = correct + 1;
-//         if (correct == 6) {
-//             alert("WOW, You have won!")
-//             inititalizeGame();
-
-//         }        
-
-//     } else {
-//         lives = lives -1;
-//         if (lives == 0) {
-//             alert("Oh no, you lost!")
-//         } else {
-//             alert("Wrong letter!" + lives + "Lives.");
-//             document.getElementById("letterGuessed").innerHTML += userGuess;
-//             document.getElementById("user-lives").innerHTML = lives;
-
-//         }
-//     }
-// } 
-
-
-// var totalWins = [];
-// var currentWord = "";
-// var currentLetter = [];
-// var guessedLetters = [];
-// var incorrectGueses = [];
-// var blankAndSuccess = [];
-// var blank = 0;
-
-
+        }
+    }
+    // update display
+    updateOutput();
+}
+    
+// // Start of the hangman
+// function startGame() {
+//     characters = characters[Math.floor(Math.random() * characters.length)]
+//     console.log(characters);
+//     console.log(characters.length);
+//     for(var i = 0; i < characters.length; i++) {
+//         console.log(i);
+//         underScores.push('_');
 
